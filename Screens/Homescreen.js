@@ -116,7 +116,7 @@ const Homescreen = ({ navigation }) => {
         
       </View>
     </ScrollView>
-      <Bottomtabs icons={bottomtabsicon}  />
+      
     </SafeAreaView>
     
 

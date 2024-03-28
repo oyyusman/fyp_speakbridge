@@ -24,7 +24,7 @@ const Signupscreen = ({ navigation }) => {
             email,
             password,
         };
-        // if (nameverify && emailverify && passwordverify) {
+        if (nameverify && emailverify && passwordverify) {
         axios.post('http://192.168.18.40:3000/register', userdata)
             .then(response => {
                 console.log(response.data)
@@ -46,10 +46,10 @@ const Signupscreen = ({ navigation }) => {
 
 
 
-        // }
-        // else {
-        //     Alert.alert("Please enter the valid details")
-        // }
+        }
+        else {
+            Alert.alert("Please enter the valid details")
+        }
 
 
 

@@ -1,5 +1,9 @@
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
+import { ToastAndroid } from 'react-native'; // Import ToastAndroid for displaying toast messages
+
+import Toast from 'react-native-toast-message';
+
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -7,6 +11,13 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const showToast = () => {
+        Toast.show({
+            type: 'success',
+            text1: 'password in incorrect',
+
+        });
+    }
 
     function handleSubmit() {
         console.log(email, password);
@@ -18,13 +29,19 @@ const LoginScreen = ({ navigation }) => {
             .then(response => {
                 console.log(response.data)
                 if (response.data.status == "ok") {
-                    Alert.alert("Login Successfull")
+                    Alert.alert("Login Successful")
                     AsyncStorage.setItem('token', response.data.data)
-                    navigation.navigate('Homescreen')
+                    navigation.navigate('BottomTabs')
+                } else {
+                    // Display toast for error message
+                    ToastAndroid.show(response.data.error, ToastAndroid.SHORT);
                 }
             })
-
-
+            .catch(error => {
+                console.error('Error occurred:', error);
+                // Display toast for network error
+                ToastAndroid.show('An error occurred. Please try again later.', ToastAndroid.SHORT);
+            });
     }
 
     return (
@@ -62,12 +79,12 @@ const LoginScreen = ({ navigation }) => {
                         autoCorrect={false}
 
                     />
-                    
 
-                    <Icon name="lock" size={18} color="black" style={styles.icon2} /> 
+
+                    <Icon name="lock" size={18} color="black" style={styles.icon2} />
 
                 </View>
-                <TouchableOpacity onPress={()=>navigation.navigate('Resetpassword')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Resetpassword')}>
                     <Text style={styles.fpassword}> forget Password?</Text>
                 </TouchableOpacity>
 
@@ -146,7 +163,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 20,
         elevation: 6,
-        position:'relative'
+        position: 'relative'
     },
     input: {
         flex: 1,

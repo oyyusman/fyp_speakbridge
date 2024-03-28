@@ -18,7 +18,7 @@ const Homescreen = ({navigation}) => {
           <Post key={index} post={post} />
         ))}
       </ScrollView>
-      <Bottomtabs icons={bottomtabsicon} />
+      {/* <Bottomtabs icons={bottomtabsicon} /> */}
 
     </SafeAreaView>
   )
